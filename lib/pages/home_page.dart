@@ -29,9 +29,7 @@ class _HomePageState extends State<HomePage> {
           )
         ],),
       ),
-      body: SafeArea(
-        child: ListPage(),
-      )
+      body: ListPage()
     );
   }
 }
