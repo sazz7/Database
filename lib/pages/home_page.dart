@@ -1,5 +1,5 @@
-import 'package:database/pages/add_page.dart';
-import 'package:database/pages/list_page.dart';
+import 'package:database/pages/add_user.dart';
+import 'package:database/pages/list_user.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,14 +22,14 @@ class _HomePageState extends State<HomePage> {
           Text("Database"),
           MaterialButton(
             onPressed: (){
-              Navigator.push(context,MaterialPageRoute(builder: (context) => AddPage()));
+              Navigator.push(context,MaterialPageRoute(builder: (context) => AddUser()));
             },
             child: Text("Add",style: TextStyle(fontSize: 20),),
             color: Colors.white,
           )
         ],),
       ),
-      body: ListPage()
+      body: ListUser()
     );
   }
 }
