@@ -16,7 +16,18 @@ class _AddUserState extends State<AddUser> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  addUser(){}
+  @override
+  void dispose(){
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  addUser(){
+
+  }
+
   clearText(){
     nameController.clear();
     emailController.clear();
@@ -67,6 +78,7 @@ class _AddUserState extends State<AddUser> {
                 if (value == null || value.isEmpty){
                   return "Please Enter Email id";
                 }
+                // clear condition
                 else if(!value.contains("@")){
                   return "Please Valid Email id";
                 }
@@ -76,10 +88,16 @@ class _AddUserState extends State<AddUser> {
             SizedBox(height: 20,),
             // password
             TextFormField(
+              //autofocus: false,
               obscureText: true,
               decoration: InputDecoration(
                   hintText: "Password:",
                   labelText: "Password",
+
+                  /*errorStyle: (
+                  TextStyle(color: Colors.red)
+                  ),*/
+
                   border: OutlineInputBorder(
                     borderSide: BorderSide(width: 2),
                   )
