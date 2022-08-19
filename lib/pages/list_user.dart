@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:database/pages/edit.dart';
 import 'package:flutter/material.dart';
 
@@ -11,53 +12,72 @@ class ListUser extends StatefulWidget {
 }
 
 class _ListUserState extends State<ListUser> {
+  final Stream<QuerySnapshot> userStream = FirebaseFirestore.instance.collection("user").snapshots();
+  deleteUser(id){
+    print("User Deleted $id");
+  }
   @override
+  
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        child: SingleChildScrollView(
-          child: Table(
-            border: TableBorder.all(),
-            // Column width size
-            columnWidths: {
-              //Column index size
-              1: FixedColumnWidth(140),
-            },
-            //Table object position
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: [
-              TableRow(
+    return StreamBuilder<QuerySnapshot>(stream: userStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+          if(snapshot.hasError){
+            print("Somthing went wrong");
+          }
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          // data read
+
+
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              child: SingleChildScrollView(
+                child: Table(
+                  border: TableBorder.all(),
+                  // Column width size
+                  columnWidths: {
+                    //Column index size
+                    1: FixedColumnWidth(140),
+                  },
+                  //Table object position
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
-                    _tablecell(name: "Name",font: FontWeight.bold,color: Colors.greenAccent,fonts: 20),
-                    _tablecell(name: "Email",font: FontWeight.bold,color: Colors.greenAccent,fonts: 20),
-                    _tablecell(name: "Action",font: FontWeight.bold,color: Colors.greenAccent,fonts: 20),
-                  ]
-              ),
-              TableRow(children: [
-                _tablecell(name: "name"),
-                _tablecell(name: "name@gmail.com"),
-                TableCell(child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => Edit()));
-                      },
-                      icon: Icon(Icons.edit,color: Colors.green),
+                    TableRow(
+                        children: [
+                          _tablecell(name: "Name",font: FontWeight.bold,color: Colors.greenAccent,fonts: 20),
+                          _tablecell(name: "Email",font: FontWeight.bold,color: Colors.greenAccent,fonts: 20),
+                          _tablecell(name: "Action",font: FontWeight.bold,color: Colors.greenAccent,fonts: 20),
+                        ]
                     ),
-                    IconButton(
-                      onPressed: (){},
-                      icon: Icon(Icons.delete,color: Colors.red,),
-                    ),
+                    TableRow(children: [
+                      _tablecell(name: "name"),
+                      _tablecell(name: "name@gmail.com"),
+                      TableCell(child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: (){
+                              Navigator.push(context,MaterialPageRoute(builder: (context) => Edit()));
+                            },
+                            icon: Icon(Icons.edit,color: Colors.green),
+                          ),
+                          IconButton(
+                            onPressed: (){},
+                            icon: Icon(Icons.delete,color: Colors.red,),
+                          ),
+                        ],
+                      ))
+                    ])
                   ],
-                ))
-              ])
-            ],
-          ),
-        ),
-      ),
-    );
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
 

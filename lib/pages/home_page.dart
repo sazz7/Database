@@ -29,7 +29,13 @@ class _HomePageState extends State<HomePage> {
           )
         ],),
       ),
-      body: ListUser()
+      body: Column(
+        children: [
+          ListUser(),
+          SizedBox(height: 20,),
+          Text("SaZz",style: TextStyle(fontSize: 20),),
+        ],
+      )
     );
   }
 }

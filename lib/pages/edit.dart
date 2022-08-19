@@ -9,23 +9,11 @@ class Edit extends StatefulWidget {
 class _EditState extends State<Edit> {
 
   final formkey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
-  var name = "";
-  var email = "";
-  var password = "";
-
-  void dispose(){
-    nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
+  editUser(){
+    print("Edit update");
   }
 
-  addUser(){}
-  clearText(){}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +33,8 @@ class _EditState extends State<Edit> {
                     borderSide: BorderSide(width: 2),
                   )
               ),
-              controller: nameController,
+              initialValue: "Sonam",
+              onChanged: (value) => {},
               // validator required
               validator: (value){
                 if (value == null || value.isEmpty){
@@ -64,7 +53,9 @@ class _EditState extends State<Edit> {
                     borderSide: BorderSide(width: 5,color: Colors.red),
                   )
               ),
-              controller: emailController,
+              initialValue: "mail@gmai.com",
+              onChanged: (value) => {},
+              // validator required
               validator: (value){
                 if (value == null || value.isEmpty){
                   return "Please Enter Email id";
@@ -93,7 +84,9 @@ class _EditState extends State<Edit> {
                     borderSide: BorderSide(width: 2),
                   )
               ),
-              controller: passwordController,
+              initialValue: "465565",
+              onChanged: (value) => {},
+              // validator required
               validator: (value){
                 if (value == null || value.isEmpty){
                   return "Please Enter Password";
@@ -110,16 +103,11 @@ class _EditState extends State<Edit> {
               color: Colors.greenAccent,
               onPressed: (){
                 if(formkey.currentState!.validate()){
-                  setState(() {
-                    name = nameController.text;
-                    email = emailController.text;
-                    password = passwordController.text;
-                    addUser();
-                    clearText();
-                  });
+                  editUser();
+                  Navigator.pop(context);
                 }
               },
-              child: Text("Sing up"),
+              child: Text("Update"),
             )
           ],),
         ),
